@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Instagram.Business.Model\Instagram.Business.Model.csproj" />
+    <ProjectReference Include="..\Instagram.Repository\Instagram.Repository.csproj" />
+  </ItemGroup>
+
+</Project>

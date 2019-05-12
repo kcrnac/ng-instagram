@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20190511183334_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190511183334_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190511183512_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190511183512_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190511183732_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190511183732_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190511185559_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190511185559_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190511193322_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190511193322_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190511193643_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190511193643_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.EntityFrameworkCore">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore\2.2.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.entityframeworkcore.sqlserver\2.2.0\lib\netstandard2.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Instagram.Data.Model\Instagram.Data.Model.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Instagram.WebApi.Controllers
@@ -10,6 +7,10 @@ namespace Instagram.WebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        public ValuesController()
+        {
+        }
+
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
