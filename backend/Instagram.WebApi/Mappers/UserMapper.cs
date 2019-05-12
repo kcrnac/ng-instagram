@@ -3,7 +3,7 @@ using Instagram.WebApi.Models.Authentication;
 
 namespace Instagram.WebApi.Mappers
 {
-    public static class RegisterMapper
+    public static class UserMapper
     {
         public static ApplicationUser MapToBussinesModel(this RegisterModel registerModel)
         {
