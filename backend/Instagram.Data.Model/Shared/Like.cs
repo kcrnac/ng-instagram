@@ -16,6 +16,5 @@ namespace Instagram.Data.Model.Shared
         public Reply.Reply Reply { get; set; }
 
         #endregion
-
     }
 }

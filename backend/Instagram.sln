@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instagram.WebApi", "Instagram.WebApi\Instagram.WebApi.csproj", "{040A6317-2F61-49FB-9BA8-76E0AEC796DB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{A089884E-8158-4511-A0F3-000179175F4B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{A089884E-8158-4511-A0F3-000179175F4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instagram.Repository", "Instagram.Repository\Instagram.Repository.csproj", "{15C8EEC1-F1C3-4060-A089-0A0978D6E670}"
 EndProject

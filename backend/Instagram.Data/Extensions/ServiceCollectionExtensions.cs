@@ -15,6 +15,7 @@ namespace Instagram.Data.Extensions
             });
 
             services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole<int>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();

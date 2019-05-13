@@ -8,7 +8,6 @@ namespace Instagram.Data.Model.Reply
     {
         public string Message { get; set; }
 
-
         #region Navigation properties
 
         public int? ParentId { get; set; }
