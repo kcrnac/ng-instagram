@@ -1,11 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Ardalis.GuardClauses;
+using Instagram.Business.Exceptions;
 using Instagram.Business.Interfaces;
 using Instagram.Business.Mappers;
-using Instagram.Business.Model.ServiceResult;
 using Instagram.Business.Model.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -36,13 +38,13 @@ namespace Instagram.Business.Services
             }
         }
 
-        public async Task<ServiceResult<string>> Login(string username, string password)
+        public async Task<string> Login(string username, string password)
         {
-            var result = new ServiceResult<string>();
-
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, password))
+            Guard.Against.UsernameDoesNotExist(username, user);
+
+            if (await _userManager.CheckPasswordAsync(user, password))
             {
                 var role = await _userManager.GetRolesAsync(user);
                 var identityOptions = new IdentityOptions();
@@ -60,18 +62,12 @@ namespace Instagram.Business.Services
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 var token = tokenHandler.WriteToken(securityToken);
 
-                result.Result = token;
+                return token;
             }
             else
             {
-                result.Errors.Add(new ValidationError
-                {
-                    Name = "Invalid Credentials",
-                    Message = "Username or password is invalid"
-                });
+                throw new ValidationException("Password/Username do not match");
             }
-
-            return result;
         }
     }
 }

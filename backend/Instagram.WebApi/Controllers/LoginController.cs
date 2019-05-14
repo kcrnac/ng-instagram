@@ -24,9 +24,9 @@ namespace Instagram.WebApi.Controllers
                 return ValidationProblem();
             }
 
-            var result = await _userService.Login(model.Username, model.Password);
-            
-            return result.IsValid ? (IActionResult) Ok(result) : BadRequest(result);
+            var token = await _userService.Login(model.Username, model.Password);
+
+            return Ok(new { token });
         }
     }
 }

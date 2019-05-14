@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Net;
 using System.Text;
 using Instagram.Business;
 using Instagram.Data.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Instagram.WebApi
@@ -86,6 +90,28 @@ namespace Instagram.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Global error handling
+            app.UseExceptionHandler(config =>
+            {
+                config.Run(async context =>
+                {
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "application/json";
+
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if (error != null)
+                    {
+                        var ex = error.Error;
+
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            StatusCode = HttpStatusCode.InternalServerError,
+                            ErrorMessage = ex.Message
+                        }));
+                    }
+                });
+            });
 
             app.UseCors(builder =>
             {

@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Instagram.Data\Instagram.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>
