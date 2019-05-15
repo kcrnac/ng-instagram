@@ -9,6 +9,7 @@ using Instagram.Business.Exceptions;
 using Instagram.Business.Interfaces;
 using Instagram.Business.Mappers;
 using Instagram.Business.Model.User;
+using Instagram.Logger.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -19,11 +20,13 @@ namespace Instagram.Business.Services
     {
         private readonly UserManager<Data.Model.Account.ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly ILoggerService _loggerService;
 
-        public UserService(UserManager<Data.Model.Account.ApplicationUser> userManager, IConfiguration configuration)
+        public UserService(ILoggerService loggerService, UserManager<Data.Model.Account.ApplicationUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _configuration = configuration;
+            _loggerService = loggerService;
         }
         public async Task<IdentityResult> Register(ApplicationUser user)
         {
@@ -33,8 +36,9 @@ namespace Instagram.Business.Services
             }
             catch (Exception e)
             {
-                // TODO: Implement logger
-                throw e;
+                _loggerService.LogError(e.Message);
+
+                throw new Exception(e.Message);
             }
         }
 

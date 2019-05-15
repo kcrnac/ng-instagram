@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Instagram.Business.Interfaces;
+using Instagram.WebApi.Extensions;
 using Instagram.WebApi.Models.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,13 +18,9 @@ namespace Instagram.WebApi.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ModelValidationFilterAttribute))]
         public async Task<IActionResult> Post(LoginModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem();
-            }
-
             var token = await _userService.Login(model.Username, model.Password);
 
             return Ok(new { token });
