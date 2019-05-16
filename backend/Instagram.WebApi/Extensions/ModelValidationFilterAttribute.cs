@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Net;
+using Instagram.ErrorHandling.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Instagram.WebApi.Extensions
@@ -9,7 +12,17 @@ namespace Instagram.WebApi.Extensions
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(context.ModelState);
+                var result = 
+                    new ErrorResponse
+                {
+                    Status = (int) HttpStatusCode.BadRequest,
+                    Errors = context.ModelState.Values
+                        .SelectMany(p => p.Errors)
+                        .Select(p => p.ErrorMessage)
+                        .ToList()
+                };
+
+                context.Result = new BadRequestObjectResult(result);
             }
         }
 

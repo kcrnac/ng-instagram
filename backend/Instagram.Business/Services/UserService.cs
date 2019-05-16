@@ -59,6 +59,7 @@ namespace Instagram.Business.Services
                         new Claim("UserId", user.Id.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
+                    // TODO: extract hard-coded values to static dictionary
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["ApplicationSettings:JwtSecret"])), SecurityAlgorithms.HmacSha256Signature)
                 };
 
@@ -70,6 +71,7 @@ namespace Instagram.Business.Services
             }
             else
             {
+                // TODO: extract these messages to static dictionary
                 throw new ValidationException("Password/Username do not match");
             }
         }

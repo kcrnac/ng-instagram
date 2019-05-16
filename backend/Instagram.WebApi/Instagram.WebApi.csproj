@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Instagram.Business.Model\Instagram.Business.Model.csproj" />
     <ProjectReference Include="..\Instagram.Business\Instagram.Business.csproj" />
     <ProjectReference Include="..\Instagram.Data\Instagram.Data.csproj" />
+    <ProjectReference Include="..\Instagram.ErrorHandling\Instagram.ErrorHandling.csproj" />
   </ItemGroup>
 
 </Project>
