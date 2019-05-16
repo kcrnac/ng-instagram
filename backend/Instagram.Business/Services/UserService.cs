@@ -1,15 +1,17 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using Instagram.Business.Constants;
 using Instagram.Business.Exceptions;
 using Instagram.Business.Interfaces;
 using Instagram.Business.Mappers;
 using Instagram.Business.Model.User;
-using Instagram.Logger.Interfaces;
+using Instagram.Common.Constants;
+using Instagram.Common.ErrorHandling.Exceptions;
+using Instagram.Common.Logger.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -46,7 +48,7 @@ namespace Instagram.Business.Services
         {
             var user = await _userManager.FindByNameAsync(username);
 
-            Guard.Against.UsernameDoesNotExist(username, user);
+            Guard.Against.UsernameDoesNotExist(user);
 
             if (await _userManager.CheckPasswordAsync(user, password))
             {
@@ -59,8 +61,7 @@ namespace Instagram.Business.Services
                         new Claim("UserId", user.Id.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
-                    // TODO: extract hard-coded values to static dictionary
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["ApplicationSettings:JwtSecret"])), SecurityAlgorithms.HmacSha256Signature)
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[ConfigurationConstants.JwtSecretKey])), SecurityAlgorithms.HmacSha256Signature)
                 };
 
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -71,8 +72,7 @@ namespace Instagram.Business.Services
             }
             else
             {
-                // TODO: extract these messages to static dictionary
-                throw new ValidationException("Password/Username do not match");
+                throw new ValidationException(ValidationConstants.IncorrectPassword);
             }
         }
     }

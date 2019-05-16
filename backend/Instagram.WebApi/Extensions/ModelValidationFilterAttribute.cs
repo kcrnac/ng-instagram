@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
-using Instagram.ErrorHandling.Models;
+using Instagram.Common.ErrorHandling.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

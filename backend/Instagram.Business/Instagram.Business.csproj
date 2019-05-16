@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Instagram.Business.Model\Instagram.Business.Model.csproj" />
-    <ProjectReference Include="..\Instagram.Logger\Instagram.Logger.csproj" />
+    <ProjectReference Include="..\Instagram.Common\Instagram.Common.csproj" />
     <ProjectReference Include="..\Instagram.Repository\Instagram.Repository.csproj" />
   </ItemGroup>
 
