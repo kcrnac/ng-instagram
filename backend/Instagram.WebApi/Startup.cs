@@ -30,7 +30,8 @@ namespace Instagram.WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            LogManager.LoadConfiguration($"{Directory.GetCurrentDirectory()}/{ConfigurationConstants.NlogConfigurationFileName}");
+
+            ConfigureLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -157,6 +158,11 @@ namespace Instagram.WebApi
             {
                 await context.Response.WriteAsync(response.ToString());
             }
+        }
+
+        private void ConfigureLogger()
+        {
+            LogManager.LoadConfiguration($"{Directory.GetCurrentDirectory()}/{ConfigurationConstants.NlogConfigurationFileName}");
         }
 
         #endregion

@@ -12,6 +12,7 @@ namespace Instagram.Data
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
+            this.Database.Migrate();
         }
 
         public DbSet<Account> Accounts { get; set; }
