@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/layout/header/header.component';
 import { FooterComponent } from './shared/layout/footer/footer.component';
+import { CoreModule } from './core/core.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,9 @@ import { FooterComponent } from './shared/layout/footer/footer.component';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
+    CoreModule,
+    AuthModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()

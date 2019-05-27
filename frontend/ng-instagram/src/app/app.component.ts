@@ -13,6 +13,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.toastrService.error('Test error');
+    //this.toastrService.error('Test error');
   }
 }

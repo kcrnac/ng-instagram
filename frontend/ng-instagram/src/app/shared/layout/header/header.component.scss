@@ -3,7 +3,8 @@
     flex-direction: column;
     align-items: center;
     padding: 0;
-    
+    height: 77px;
+    border-bottom: 1px solid rgba(0, 0, 0, .0975);
     .container-fixed {
         max-width: 1010px;
         width: 100%;
@@ -12,5 +13,23 @@
         flex-direction: row;
         align-items: center;
         padding: 26px 20px;
+        .navbar-brand {
+            .icon {
+                color: black;
+                font-size: 24px;
+            }
+        }
+        .navbar-nav {
+            padding-left: 24px;
+            .icon {
+                color: black;
+                font-size: 24px;
+            }
+            .nav-item {
+                &:not(:first-child) {
+                    margin-left: 30px;
+                }
+            }
+        }
     }
 }
