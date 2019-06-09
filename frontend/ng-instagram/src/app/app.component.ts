@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from './core/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -9,10 +10,12 @@ import { ToastrService } from 'ngx-toastr';
 export class AppComponent {
   title = 'ng-instagram';
 
-  constructor(private toastrService: ToastrService) {
+  constructor(
+    private userService: UserService
+  ) {
   }
 
   ngOnInit() {
-    //this.toastrService.error('Test error');
+    this.userService.populate();
   }
 }

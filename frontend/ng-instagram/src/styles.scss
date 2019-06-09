@@ -1,5 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
 
+html,
+body {
+    height: 100%;
+}
+
 body {
     background-color: #fafafa;
+}
+
+input,
+button {
+    &:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+        -webkit-appearance: none;
+    }
 }
