@@ -5,14 +5,15 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { HttpClient } from '@angular/common/http';
+import { IdentityResult } from '../models/identity-result.model';
 
 @Injectable()
 export class UserService {
   private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
-  private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
-  public isAuthenticated = this.isAuthenticatedSubject.asObservable();
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
+  public isAuthenticated = this.isAuthenticatedSubject.asObservable().pipe(distinctUntilChanged());
 
   constructor(
     private apiService: ApiService,
@@ -22,21 +23,23 @@ export class UserService {
 
   populate() {
     if (this.jwtService.getToken()) {
-      this.apiService.get('/user')
+      /* this.apiService.get('/user')
         .subscribe(
           data => this.setAuth(data.user),
           err => this.purgeAuth()
-        );
+        ); */
+
+      this.setAuth(this.jwtService.getToken());
     } else {
       this.purgeAuth();
     }
   }
 
-  setAuth(user: User) {
+  setAuth(token: string) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.token);
+    this.jwtService.saveToken(token);
     // Set current user data into observable
-    this.currentUserSubject.next(user);
+    this.currentUserSubject.next({ token: token } as User);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
   }
@@ -50,12 +53,20 @@ export class UserService {
     this.isAuthenticatedSubject.next(false);
   }
 
-  attemptAuth(type, credentials): Observable<User> {
-    const route = (type === 'login') ? '/login' : '';
-    return this.apiService.post('/users' + route, { user: credentials })
+  attemptAuth(credentials): Observable<User> {
+    return this.apiService.post('/Login', credentials)
       .pipe(map(
         data => {
-          this.setAuth(data.user);
+          this.setAuth(data.token);
+          return data;
+        }
+      ));
+  }
+
+  attemptRegister(credentials): Observable<IdentityResult> {
+    return this.apiService.post('/Register', credentials)
+      .pipe(map(
+        data => {
           return data;
         }
       ));

@@ -1,16 +1,19 @@
 import { NgModule } from "@angular/core";
-import { AuthComponent } from './auth.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { NoAuthGuard } from './no-auth-guard.service';
 import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
     imports: [
-        AuthRoutingModule
+        AuthRoutingModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
     declarations: [
-        AuthComponent,
-        LoginComponent
+        LoginComponent,
+        RegisterComponent
     ],
     providers: [
         NoAuthGuard
