@@ -19,12 +19,15 @@
                         <input formControlName="password" type="password" class="form-control" placeholder="Password">
                     </div>
 
-                    <button type="submit" class="btn btn-block btn-blue">Register</button>
+                    <button type="submit" class="btn btn-block btn-blue"
+                        [disabled]="!registerForm.valid">Register</button>
                 </form>
 
             </div>
 
-            <p class="text-center gray-light">By signing up, you agree to our Terms . Learn how we collect, use and share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .</p>
+            <p class="text-center gray-light">By signing up, you agree to our Terms . Learn how we collect, use and
+                share your data in our Data Policy and how we use cookies and similar technology in our Cookies Policy .
+            </p>
         </div>
 
         <div class="action-container">

@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+$color-error: red;
+
 html,
 body {
     height: 100%;
@@ -19,11 +21,19 @@ button {
     }
 }
 
+*[type=submit]:disabled {
+    cursor: auto !important;
+}
+
 
 /* COLORS */
 
 .gray-light {
     color: #999;
+}
+
+.color-error {
+    color: $color-error;
 }
 
 .btn-blue {
@@ -39,6 +49,8 @@ button {
         opacity: 0.7;
     }
 }
+
+/* VALIDATION */
 
 #auth-view {
     width: 100%;

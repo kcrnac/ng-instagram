@@ -33,4 +33,6 @@ export class RegisterComponent implements OnInit {
       .subscribe();
   }
 
+  get form() { return this.registerForm.controls };
+
 }
