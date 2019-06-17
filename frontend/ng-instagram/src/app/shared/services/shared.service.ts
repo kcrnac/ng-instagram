@@ -8,10 +8,15 @@ export class SharedService {
     parseServerErrors(data: any): Array<string> {
         let errors = Array<string>();
 
-        if (data && data.errors) {
-            data.errors.forEach((error) => {
-                errors.push(error.description);
-            });
+        if (data) {
+            if (data.errors) {
+                data.errors.forEach((error) => {
+                    errors.push(error.description);
+                });
+            }
+            if (data.error) {
+                errors = data.error.errors;
+            }
         }
 
         return errors;

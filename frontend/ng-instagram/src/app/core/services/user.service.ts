@@ -19,27 +19,32 @@ export class UserService {
     private apiService: ApiService,
     private http: HttpClient,
     private jwtService: JwtService
-  ) { }
+  ) {
+    var tokenExists = this.jwtService.getToken() != null;
+    this.isAuthenticatedSubject.next(tokenExists);
+  }
 
   populate() {
-    if (this.jwtService.getToken()) {
-      /* this.apiService.get('/user')
+    var token = this.jwtService.getToken();
+    if (token) {
+      this.apiService.get('/user')
         .subscribe(
-          data => this.setAuth(data.user),
+          data => {
+            data.token = token;
+            this.setAuth(data);
+          },
           err => this.purgeAuth()
-        ); */
-
-      this.setAuth(this.jwtService.getToken());
+        );
     } else {
       this.purgeAuth();
     }
   }
 
-  setAuth(token: string) {
+  setAuth(data: any) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(token);
+    this.jwtService.saveToken(data.token);
     // Set current user data into observable
-    this.currentUserSubject.next({ token: token } as User);
+    this.currentUserSubject.next(data.user as User);
     // Set isAuthenticated to true
     this.isAuthenticatedSubject.next(true);
   }
@@ -53,11 +58,11 @@ export class UserService {
     this.isAuthenticatedSubject.next(false);
   }
 
-  attemptAuth(credentials): Observable<User> {
+  attemptAuth(credentials): any {
     return this.apiService.post('/Login', credentials)
       .pipe(map(
         data => {
-          this.setAuth(data.token);
+          this.setAuth(data);
           return data;
         }
       ));

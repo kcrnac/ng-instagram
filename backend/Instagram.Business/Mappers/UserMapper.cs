@@ -16,5 +16,17 @@ namespace Instagram.Business.Mappers
                 Gender = (Gender) Enum.Parse(typeof(Gender), businessModel.Gender.ToString())
             };
         }
+
+        public static Model.User.ApplicationUser MapToBusinessModel(this ApplicationUser dataModel)
+        {
+            return new Model.User.ApplicationUser()
+            {
+                Username = dataModel.UserName,
+                Email = dataModel.Email,
+                Birthday = dataModel.Birthdate,
+                Name = dataModel.Name,
+                Gender = (Model.User.Gender)Enum.Parse(typeof(Model.User.Gender), dataModel.Gender.ToString())
+            };
+        }
     }
 }

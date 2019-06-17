@@ -26,7 +26,10 @@ import { HomeModule } from './home/home.module';
     SharedModule,
     HomeModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot({
+      progressBar: true,
+      extendedTimeOut: 2000
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

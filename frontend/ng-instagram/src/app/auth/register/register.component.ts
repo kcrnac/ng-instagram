@@ -40,9 +40,10 @@ export class RegisterComponent implements OnInit {
       .subscribe((data) => {
         if (data && !data.succeeded) {
           this.errors = this.sharedService.parseServerErrors(data);
+          this.isSubmitting = false;
         }
 
-        this.isSubmitting = false;
+        this.router.navigateByUrl('/login');
       },
         err => {
           this.isSubmitting = false;

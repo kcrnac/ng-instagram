@@ -58,7 +58,7 @@ namespace Instagram.Business.Services
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("UserId", user.Id.ToString())
+                        new Claim(ClaimTypes.Name, user.Id.ToString())
                     }),
                     Expires = DateTime.UtcNow.AddMinutes(30),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[ConfigurationConstants.JwtSecretKey])), SecurityAlgorithms.HmacSha256Signature)
@@ -74,6 +74,20 @@ namespace Instagram.Business.Services
             {
                 throw new ValidationException(ValidationConstants.IncorrectPassword);
             }
+        }
+
+        public async Task<ApplicationUser> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return user?.MapToBusinessModel();
+        }
+
+        public async Task<ApplicationUser> GetUserByUsername(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            return user?.MapToBusinessModel();
         }
     }
 }

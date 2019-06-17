@@ -7,15 +7,20 @@
             <div class="form-container">
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
-                        <input formControlName="username" type="text" class="form-control" placeholder="Username">
+                        <input formControlName="username" type="text" class="form-control" placeholder="Username"
+                            [attr.disabled]="isSubmitting ? '' : null">
                     </div>
                     <div class="form-group">
-                        <input formControlName="password" type="password" class="form-control" placeholder="Password">
+                        <input formControlName="password" type="password" class="form-control" placeholder="Password"
+                            [attr.disabled]="isSubmitting ? '' : null">
                     </div>
 
-                    <button type="submit" class="btn btn-blue btn-block" [disabled]="!loginForm.valid">Log in</button>
+                    <button type="submit" class="btn btn-blue btn-block"
+                        [disabled]="!loginForm.valid || isSubmitting">Log in</button>
                 </form>
             </div>
+
+            <app-list-errors [errors]="errors"></app-list-errors>
 
             <p class="divider"></p>
             <p class="text-center"><a class="link" routerLink="">Forgot passowrd?</a></p>

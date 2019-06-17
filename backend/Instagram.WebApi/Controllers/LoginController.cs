@@ -22,8 +22,9 @@ namespace Instagram.WebApi.Controllers
         public async Task<IActionResult> Post(LoginModel model)
         {
             var token = await _userService.Login(model.Username, model.Password);
+            var user = await _userService.GetUserByUsername(model.Username);
 
-            return Ok(new { token });
+            return Ok(new { token, user });
         }
     }
 }
