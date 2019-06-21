@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { UserService } from './core/services/user.service';
 
 @Component({
@@ -11,8 +10,7 @@ export class AppComponent {
   title = 'ng-instagram';
 
   constructor(
-    private userService: UserService
-  ) {
+    private userService: UserService) {
   }
 
   ngOnInit() {

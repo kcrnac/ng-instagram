@@ -11,6 +11,7 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
+import { ProfileModule } from './profile/profile.module';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HomeModule } from './home/home.module';
     AuthModule,
     SharedModule,
     HomeModule,
+    ProfileModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       progressBar: true,

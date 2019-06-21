@@ -21,10 +21,20 @@ namespace Instagram.WebApi.Controllers
 
         [HttpGet]
         [ServiceFilter(typeof(ModelValidationFilterAttribute))]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string id)
         {
-            var userId = User.FindFirst(ClaimTypes.Name).Value;
+            string userId = id ?? User.FindFirst(ClaimTypes.Name).Value;
             var user = await _userService.GetUserById(userId);
+
+            return Ok(new { user });
+        }
+
+        [HttpGet]
+        [Route("GetByUsername")]
+        [ServiceFilter(typeof(ModelValidationFilterAttribute))]
+        public async Task<IActionResult> GetByUsername(string username)
+        {
+            var user = await _userService.GetUserByUsername(username);
 
             return Ok(new { user });
         }

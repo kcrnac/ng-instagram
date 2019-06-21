@@ -37,13 +37,10 @@ export class LoginComponent implements OnInit {
     this.errors = [];
 
     this.userService.attemptAuth(this.loginForm.value)
-      .subscribe((data) => {
+      .subscribe(() => {
         this.router.navigateByUrl('/');
       },
-        err => {
-          var errors = this.sharedService.parseServerErrors(err);
-
-          errors.forEach((error) => { this.toastrService.error(error) });
+        (err) => {
           this.isSubmitting = false;
         });
   }

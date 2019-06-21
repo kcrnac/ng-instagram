@@ -1,10 +1,13 @@
-<nav class="navbar navbar-expand bg-white" *appShowAuthed="true">
+<nav class="navbar navbar-expand bg-white">
     <div class="container-fixed">
         <a class="navbar-brand" href="#">
             <i class="icon fab fa-instagram"></i>
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
+                <li>
+                    <a href="#" routerLink="{{currentUser?.username}}">{{currentUser?.username}}</a>
+                </li>
                 <li class="nav-item active">
                     <a href="#">
                         <i class="icon far fa-compass"></i>

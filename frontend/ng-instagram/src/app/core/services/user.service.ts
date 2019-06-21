@@ -4,7 +4,7 @@ import { map, distinctUntilChanged } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { IdentityResult } from '../models/identity-result.model';
 
 @Injectable()
@@ -79,6 +79,24 @@ export class UserService {
 
   getCurrentUser(): User {
     return this.currentUserSubject.value;
+  }
+
+  getUser(id): any {
+    return this.apiService
+      .get('/user', new HttpParams().set('id', id))
+      .pipe(map(data => {
+        return data.user as User;
+      }));
+  }
+
+  getUserByUsername(username): Observable<User> {
+    return this.apiService
+      .get('/user/getByUsername', new HttpParams().set('username', username))
+      .pipe(map(
+        data => {
+          return data.user as User;
+        }
+      ));
   }
 
   update(user): Observable<User> {

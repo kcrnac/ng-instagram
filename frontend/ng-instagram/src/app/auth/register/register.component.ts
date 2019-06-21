@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, FormGroup, FormControl, Validators } 
 import { Router } from '@angular/router';
 import { UserService } from '../../core/services/user.service';
 import { SharedService } from '../../shared/services/shared.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private toastrService: ToastrService
   ) {
     this.registerForm = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -39,11 +41,16 @@ export class RegisterComponent implements OnInit {
     this.userService.attemptRegister(this.registerForm.value)
       .subscribe((data) => {
         if (data && !data.succeeded) {
-          this.errors = this.sharedService.parseServerErrors(data);
-          this.isSubmitting = false;
-        }
 
-        this.router.navigateByUrl('/login');
+          this.sharedService.parseServerErrorsAndToast(data);
+          this.isSubmitting = false;
+
+        } else {
+
+          this.toastrService.success("User successfuly created.")
+          this.router.navigateByUrl('/login');
+
+        }
       },
         err => {
           this.isSubmitting = false;
