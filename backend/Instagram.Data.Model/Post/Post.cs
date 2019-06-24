@@ -8,12 +8,13 @@ namespace Instagram.Data.Model.Post
     {
         public string Description { get; set; }
 
+        public string Image { get; set; }
+
         #region Navigation properties
 
-        public int AuthorId { get; set; }
         public ApplicationUser Author { get; set; }
 
-        public List<Like> Likes { get; set; }
+        public ICollection<Like> Likes { get; set; }
 
         #endregion
     }

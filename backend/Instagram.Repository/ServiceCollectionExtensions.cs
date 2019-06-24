@@ -12,6 +12,7 @@ namespace Instagram.Repository
             services.AddTransient<ApplicationDbContext>();
 
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }

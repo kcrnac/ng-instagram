@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../core/services/user.service';
 import { User } from '../core/models/user.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -10,12 +11,13 @@ import { User } from '../core/models/user.model';
 })
 export class ProfileComponent implements OnInit {
 
-  username: string;
   user: User;
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private toastrService: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -28,6 +30,10 @@ export class ProfileComponent implements OnInit {
     if (params != null) {
       this.userService.getUserByUsername(params.username)
         .subscribe((user) => {
+          if (user == null) {
+            this.toastrService.error('User does not exist');
+            this.router.navigateByUrl('/');
+          }
           this.user = user;
         })
     }

@@ -3,7 +3,9 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Instagram.Business;
+using Instagram.Business.Mappers;
 using Instagram.Common.Constants;
 using Instagram.Common.ErrorHandling.Exceptions;
 using Instagram.Common.ErrorHandling.Models;
@@ -20,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using NLog;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -53,10 +56,15 @@ namespace Instagram.WebApi
 
             services.AddMvc()
                 .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = true; // Disabling automatic 400 responses
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
                     {
-                        options.SuppressModelStateInvalidFilter = true; // Disabling automatic 400 responses
-                    })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    });
+
             services.AddCors();
         }
 

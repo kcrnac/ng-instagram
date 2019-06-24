@@ -38,4 +38,8 @@
     <ProjectReference Include="..\Instagram.Data.Model\Instagram.Data.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

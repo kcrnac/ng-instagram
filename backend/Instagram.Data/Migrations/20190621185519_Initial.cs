@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Instagram.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -203,7 +203,8 @@ namespace Instagram.Data.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false),
                     DateModified = table.Column<DateTime>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<int>(nullable: false)
+                    Image = table.Column<string>(nullable: true),
+                    AuthorId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -213,7 +214,7 @@ namespace Instagram.Data.Migrations
                         column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

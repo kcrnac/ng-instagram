@@ -13,7 +13,9 @@ namespace Instagram.Data.Model.Account
 
         #region Navigation properties
 
-        public List<Account> Accounts { get; set; }
+        public ICollection<Account> Accounts { get; set; }
+
+        public ICollection<Post.Post> Posts { get; set; }
 
         #endregion
     }

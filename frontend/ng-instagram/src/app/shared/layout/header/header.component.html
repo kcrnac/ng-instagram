@@ -5,11 +5,8 @@
         </a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto">
-                <li>
-                    <a href="#" routerLink="{{currentUser?.username}}">{{currentUser?.username}}</a>
-                </li>
                 <li class="nav-item active">
-                    <a href="#">
+                    <a href="#" (click)="logout()">
                         <i class="icon far fa-compass"></i>
                     </a>
                 </li>
@@ -19,7 +16,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" (click)="logout()">
+                    <a href="" routerLink="{{currentUser?.username}}">
                         <i class="icon far fa-user"></i>
                     </a>
                 </li>

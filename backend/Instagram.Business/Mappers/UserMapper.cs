@@ -1,32 +1,18 @@
-﻿using System;
+﻿using AutoMapper;
 using Instagram.Data.Model.Account;
 
 namespace Instagram.Business.Mappers
 {
     public static class UserMapper
     {
-        public static ApplicationUser MapToDataModel(this Model.User.ApplicationUser businessModel)
+        public static ApplicationUser MapToDataModel(this Model.User.ApplicationUser businessModel, IMapper mapper)
         {
-            return new ApplicationUser()
-            {
-                UserName = businessModel.Username,
-                Email = businessModel.Email,
-                Birthdate = businessModel.Birthday,
-                Name = businessModel.Name,
-                Gender = (Gender) Enum.Parse(typeof(Gender), businessModel.Gender.ToString())
-            };
+            return mapper.Map<ApplicationUser>(businessModel);
         }
 
-        public static Model.User.ApplicationUser MapToBusinessModel(this ApplicationUser dataModel)
+        public static Model.User.ApplicationUser MapToBusinessModel(this ApplicationUser dataModel, IMapper mapper)
         {
-            return new Model.User.ApplicationUser()
-            {
-                Username = dataModel.UserName,
-                Email = dataModel.Email,
-                Birthday = dataModel.Birthdate,
-                Name = dataModel.Name,
-                Gender = (Model.User.Gender)Enum.Parse(typeof(Model.User.Gender), dataModel.Gender.ToString())
-            };
+            return mapper.Map<Model.User.ApplicationUser>(dataModel);
         }
     }
 }

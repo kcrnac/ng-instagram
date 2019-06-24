@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Ardalis.GuardClauses;
+using AutoMapper;
 using Instagram.Business.Constants;
 using Instagram.Business.Exceptions;
 using Instagram.Business.Interfaces;
 using Instagram.Business.Mappers;
-using Instagram.Business.Model.User;
 using Instagram.Common.Constants;
 using Instagram.Common.ErrorHandling.Exceptions;
 using Instagram.Common.Logger.Interfaces;
+using Instagram.Data.Model.Account;
+using Instagram.Data.Model.Post;
+using Instagram.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ApplicationUser = Instagram.Business.Model.User.ApplicationUser;
 
 namespace Instagram.Business.Services
 {
@@ -23,18 +28,52 @@ namespace Instagram.Business.Services
         private readonly UserManager<Data.Model.Account.ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly ILoggerService _loggerService;
+        private readonly IAccountRepository _accountRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(ILoggerService loggerService, UserManager<Data.Model.Account.ApplicationUser> userManager, IConfiguration configuration)
+        public UserService(
+            ILoggerService loggerService, 
+            UserManager<Data.Model.Account.ApplicationUser> userManager, 
+            IConfiguration configuration,
+            IAccountRepository accountRepository,
+            IUserRepository userRepository,
+            IMapper mapper)
         {
             _userManager = userManager;
             _configuration = configuration;
             _loggerService = loggerService;
+            _accountRepository = accountRepository;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
         public async Task<IdentityResult> Register(ApplicationUser user)
         {
             try
             {
-                return await _userManager.CreateAsync(user.MapToDataModel(), user.Password);
+                var result = await _userManager.CreateAsync(user.MapToDataModel(_mapper), user.Password);
+
+                if (result.Succeeded)
+                {
+                    var dbUser = await _userRepository.GetUserByUsername(user.Username);
+
+                    if (dbUser != null)
+                    {
+                        dbUser.Posts = new List<Post>()
+                        {
+                            new Post() { Description = "First post" }
+                        };
+
+                        dbUser.Accounts = new List<Account>()
+                        {
+                            new Account() { DateCreated = DateTime.Now,  Owner = dbUser }
+                        };
+
+                        await _userRepository.Update(dbUser);
+                    }
+                }
+
+                return result;
             }
             catch (Exception e)
             {
@@ -80,14 +119,14 @@ namespace Instagram.Business.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            return user?.MapToBusinessModel();
+            return user.MapToBusinessModel(_mapper);
         }
 
         public async Task<ApplicationUser> GetUserByUsername(string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
+            var user = await _userRepository.GetUserByUsername(username);
 
-            return user?.MapToBusinessModel();
+            return user.MapToBusinessModel(_mapper);
         }
     }
 }

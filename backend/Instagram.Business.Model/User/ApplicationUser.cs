@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Instagram.Business.Model.Shared;
 
 namespace Instagram.Business.Model.User
@@ -16,5 +17,7 @@ namespace Instagram.Business.Model.User
         public Gender Gender { get; set; }
 
         public DateTime Birthday { get; set; }
+
+        public List<Post.Post> Posts { get; set; }
     }
 }

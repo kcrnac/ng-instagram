@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190512091546_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190621185519_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,13 +145,15 @@ namespace Instagram.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
+                    b.Property<int?>("AuthorId");
 
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime?>("DateModified");
 
                     b.Property<string>("Description");
+
+                    b.Property<string>("Image");
 
                     b.HasKey("Id");
 
@@ -348,9 +350,8 @@ namespace Instagram.Data.Migrations
             modelBuilder.Entity("Instagram.Data.Model.Post.Post", b =>
                 {
                     b.HasOne("Instagram.Data.Model.Account.ApplicationUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("Posts")
+                        .HasForeignKey("AuthorId");
                 });
 
             modelBuilder.Entity("Instagram.Data.Model.Reply.Reply", b =>
