@@ -45,7 +45,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "ngx-toastr": "^10.0.4",
-    "npm": "^6.9.0",
+    "npm": "^6.13.4",
     "popper.js": "^1.15.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
